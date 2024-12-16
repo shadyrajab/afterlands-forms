@@ -1,8 +1,8 @@
 import { createFormsEmbed, createFormsEmbedCommandData } from "@commands"
 
 export const interactions = {
-    "createFormsEmbed": {
-        execute: createFormsEmbed,
+    "setup": {
+        getCommand: createFormsEmbed,
         commandData: createFormsEmbedCommandData
     }
 }
