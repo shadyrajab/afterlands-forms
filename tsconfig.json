@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                                  
+    "module": "commonjs",                               
+    "esModuleInterop": true,                            
+    "forceConsistentCasingInFileNames": true,       
+    "skipLibCheck": true,
+    "paths": {
+      "@events": ["./src/events"],
+      "@interfaces": ["./src/interfaces"],
+      "@config": ["./config"],
+      "@commands": ["./src/commands"]
+    }                       
+  }
+}
