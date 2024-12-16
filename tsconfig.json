@@ -1,15 +1,61 @@
 {
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "Node 20",
+  "_version": "20.9.0",
+  "include": ["src/**/*", "tests/**/*.ts"],
+  "exclude": ["node_modules", "dist"],
+  "compileOnSave": true,
   "compilerOptions": {
-    "target": "es2016",                                  
-    "module": "commonjs",                               
-    "esModuleInterop": true,                            
-    "forceConsistentCasingInFileNames": true,       
-    "skipLibCheck": true,
-    "paths": {
-      "@events": ["./src/events"],
-      "@interfaces": ["./src/interfaces"],
-      "@config": ["./config"],
-      "@commands": ["./src/commands"]
-    }                       
+      /* Projects */
+      // "incremental": true, // Save .tsbuildinfo files to allow for incremental compilation of projects.
+
+      /* Language and Environment */
+      "target": "es2023",
+      "lib": ["ES2023"],
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "useDefineForClassFields": true,
+
+      /* Modules */
+      "module": "Node16",
+      "rootDir": "./",
+      "moduleResolution": "Node16",
+      "baseUrl": "./",
+      "paths": {
+          "@events": ["./src/events"],
+          "@interfaces": ["./src/interfaces"],
+          "@config": ["./src/config"],
+          "@commands": ["./src/commands"]
+      },
+      "resolvePackageJsonExports": true,
+      "resolvePackageJsonImports": true,
+      "resolveJsonModule": true,
+      "moduleDetection": "auto",
+
+      /* JavaScript Support */
+      "allowJs": false,
+
+      /* Emit */
+      "declaration": false,
+      "sourceMap": true,
+      "outDir": "./dist",
+
+      /* Interop Constraints */
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+
+      /* Type Checking */
+      "strict": true,
+      "noImplicitAny": false,
+      "strictPropertyInitialization": true,
+      "noImplicitThis": true,
+      "noUnusedLocals": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "useUnknownInCatchVariables": false,
+
+      /* Completeness */
+      "skipLibCheck": true
   }
 }
