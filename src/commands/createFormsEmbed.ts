@@ -1,5 +1,8 @@
 import { 
+    ActionRowBuilder,
     ApplicationCommandOptionType, 
+    ButtonBuilder, 
+    ButtonStyle, 
     Client, 
     ColorResolvable, 
     CommandInteraction, 
@@ -8,8 +11,8 @@ import {
 import { Command, CommandData } from "@interfaces"
 import { config } from "@config"
 
-export const createFormsEmbedCommandData: CommandData = {
-    name: "createFormsEmbed",
+export const createFormsEmbedCommandData: Partial<CommandData> = {
+    name: 'setup',
     description: "Seta a embed principal para a criação de formulários",
     permissions: ["Administrator"],
     options: [{
@@ -29,8 +32,24 @@ export const createFormsEmbed = async (client: Client): Promise<Command> => {
             const { defaultColor } = config
             const embed = new EmbedBuilder()
                 .setColor(defaultColor as ColorResolvable)
+                .addFields([
+                    {
+                        name: "📝 Criar Formulário",
+                        value: "Clique no botão abaixo para criar um formulário",
+                        inline: true
+                    }
+                ])
 
-            await interaction.channel.send({embeds: [embed]})
+            if (!interaction.channel?.isSendable()) return;
+
+            const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
+                new ButtonBuilder()
+                    .setCustomId('create_form')
+                    .setLabel('Criar Formulário')
+                    .setStyle(ButtonStyle.Primary)
+            );
+
+            await interaction.channel.send({embeds: [embed], components: [row]})
         }       
     }
 

@@ -13,19 +13,18 @@ export interface CommandData {
     permissions?: PermissionResolvable[]
     direct?: boolean;
     options?: CommandOptions[];
-    execute?: (interaction: CommandInteraction) => void;
+    execute: (interaction: CommandInteraction) => void;
 }
 
 export class Command {
     constructor(private commandData: CommandData) {}
 
-    execute(interaction: CommandInteraction) {
+    async execute(interaction: CommandInteraction) {
         this.commandData.execute(interaction)
     };
 }
 
-function a(permissions: PermissionResolvable[]) {
-    
+export interface CommandMapping {
+    getCommand: Command,
+    commandData: CommandData
 }
-
-a(["AddReactions"])
