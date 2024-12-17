@@ -24,7 +24,7 @@
       "paths": {
           "@events": ["./src/events"],
           "@interfaces": ["./src/interfaces"],
-          "@config": ["./src/config"],
+          "@config": ["./config"],
           "@commands": ["./src/commands"]
       },
       "resolvePackageJsonExports": true,
