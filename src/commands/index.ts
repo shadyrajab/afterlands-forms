@@ -1,1 +1,1 @@
-export * from './createFormsEmbed'
+export * from './setup'

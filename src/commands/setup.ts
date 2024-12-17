@@ -3,6 +3,7 @@ import {
     ApplicationCommandOptionType, 
     ButtonBuilder, 
     ButtonStyle, 
+    ChannelType, 
     Client, 
     ColorResolvable, 
     CommandInteraction, 
@@ -11,7 +12,7 @@ import {
 import { Command, CommandData } from "@interfaces"
 import { config } from "@config"
 
-export const createFormsEmbedCommandData: Partial<CommandData> = {
+export const setupCommandData: Partial<CommandData> = {
     name: 'setup',
     description: "Seta a embed principal para a criação de formulários",
     permissions: ["Administrator"],
@@ -23,12 +24,16 @@ export const createFormsEmbedCommandData: Partial<CommandData> = {
     }],
 }
 
-export const createFormsEmbed = async (client: Client): Promise<Command> => {
+export const setup = async (client: Client): Promise<Command> => {
     const commandData: CommandData = {
         client,
-        ...createFormsEmbedCommandData,
+        ...setupCommandData,
         
         execute: async (interaction: CommandInteraction) => {
+            const { channel: interactionChannel, guild, user } = interaction
+
+            if (user.id !== guild?.ownerId) return;
+
             const { defaultColor } = config
             const embed = new EmbedBuilder()
                 .setColor(defaultColor as ColorResolvable)
@@ -40,7 +45,7 @@ export const createFormsEmbed = async (client: Client): Promise<Command> => {
                     }
                 ])
 
-            if (!interaction.channel?.isSendable()) return;
+            if (!interactionChannel?.isSendable()) return;
 
             const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
                 new ButtonBuilder()
@@ -49,7 +54,26 @@ export const createFormsEmbed = async (client: Client): Promise<Command> => {
                     .setStyle(ButtonStyle.Primary)
             );
 
-            await interaction.channel.send({embeds: [embed], components: [row]})
+            const category = await guild?.channels.create({
+                name: 'Temporary Channels',
+                type: ChannelType.GuildCategory,
+                reason: "Setup Afterlands Forms system",
+            });
+
+            const forum = await guild?.channels.create({
+                name: 'Formulários',
+                type: ChannelType.GuildForum,
+                parent: category,
+                reason: "Setup Afterlands Forms system",
+            });
+
+            forum?.threads.create({
+                name: 'Formulários',
+                reason: "Setup Afterlands Forms system",
+                message: { content: 'Formulários' }
+            });
+
+            await interactionChannel.send({embeds: [embed], components: [row]})
         }       
     }
 
